@@ -1,1 +1,24 @@
-<app-pet-list></app-pet-list>
+<header class="bg-white shadow-sm border-b border-gray-100">
+	<div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+		<a routerLink="/" class="text-2xl font-bold text-indigo-600">PatsWorld</a>
+
+		<nav class="flex items-center gap-3 text-sm font-semibold text-gray-700">
+			@if (auth.user$ | async; as user) {
+				<span class="text-gray-600">Hola, {{ user.fullName }}</span>
+				<button
+					class="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700"
+					(click)="auth.logout()"
+				>
+					Cerrar sesión
+				</button>
+			} @else {
+				<a routerLink="/login" class="px-3 py-2 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Entrar</a>
+				<a routerLink="/register" class="px-3 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700">Registrarse</a>
+			}
+		</nav>
+	</div>
+</header>
+
+<main class="min-h-screen">
+	<router-outlet></router-outlet>
+</main>

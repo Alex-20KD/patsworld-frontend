@@ -12,4 +12,8 @@ export class PetService {
   getPets(): Observable<Pet[]> {
     return this.http.get<Pet[]>(this.apiUrl);
   }
+  // 👇 AGREGA ESTO: Buscar por ID
+  getPetById(id: string): Observable<Pet> {
+    return this.http.get<Pet>(`${this.apiUrl}/${id}`);
+  }
 }

@@ -1,0 +1,79 @@
+<div class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 space-y-6">
+    <div class="text-center">
+      <h1 class="text-2xl font-bold text-gray-900">Crear cuenta</h1>
+      <p class="text-gray-500">Regístrate para contactar a los dueños</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
+        <input
+          type="text"
+          formControlName="fullName"
+          class="w-full rounded-lg border border-gray-200 px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600"
+          placeholder="Tu nombre"
+        />
+        @if (form.controls.fullName.touched && form.controls.fullName.invalid) {
+          <p class="text-sm text-red-600 mt-1">Este campo es obligatorio.</p>
+        }
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="w-full rounded-lg border border-gray-200 px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600"
+          placeholder="tu@email.com"
+        />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <p class="text-sm text-red-600 mt-1">Ingresa un email válido.</p>
+        }
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+        <input
+          type="tel"
+          formControlName="phone"
+          class="w-full rounded-lg border border-gray-200 px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600"
+          placeholder="Ej: 5551234567"
+        />
+        @if (form.controls.phone.touched && form.controls.phone.invalid) {
+          <p class="text-sm text-red-600 mt-1">El teléfono es obligatorio.</p>
+        }
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          class="w-full rounded-lg border border-gray-200 px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600"
+          placeholder="••••••••"
+        />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <p class="text-sm text-red-600 mt-1">La contraseña es obligatoria.</p>
+        }
+      </div>
+
+      @if (error) {
+        <p class="text-sm text-red-600">{{ error }}</p>
+      }
+
+      <button
+        type="submit"
+        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg shadow-md transition"
+        [disabled]="submitting"
+      >
+        {{ submitting ? 'Creando cuenta...' : 'Registrarse' }}
+      </button>
+    </form>
+
+    <p class="text-center text-sm text-gray-600">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login" class="text-indigo-600 font-semibold hover:underline">Inicia sesión</a>
+    </p>
+  </div>
+</div>

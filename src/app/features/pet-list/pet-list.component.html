@@ -11,11 +11,16 @@
   @if (pets.length > 0) {
     <div class="max-w-7xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 
-      @for (pet of pets; track pet.name) {
+      @for (pet of pets.filter((p) => !!p.id); track pet.id) {
         <div class="bg-white overflow-hidden shadow-lg rounded-2xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100">
 
           <div class="relative h-64 w-full bg-gray-200">
-            <img [src]="pet.imageUrl" [alt]="pet.name" class="w-full h-full object-cover">
+            <img
+              [src]="pet.imageUrl || 'https://via.placeholder.com/400x400?text=Cargando+Michi'"
+              (error)="($event.target as HTMLImageElement).src = 'https://via.placeholder.com/400x400?text=Cargando+Michi'"
+              [alt]="pet.name || 'Michi en adopción'"
+              class="w-full h-full object-cover"
+            >
 
             <div class="absolute top-4 right-4">
               @if (!pet.isAdopted) {
@@ -30,10 +35,18 @@
             </div>
           </div>
 
-          <div class="p-6">
-            <h2 class="text-2xl font-bold text-gray-900">{{ pet.name }}</h2>
-            <p class="text-indigo-600 font-medium mb-2">{{ pet.breed }}</p>
-            <p class="text-gray-600 line-clamp-3">{{ pet.description }}</p>
+          <div class="p-6 flex flex-col gap-3">
+            <div>
+              <h2 class="text-2xl font-bold text-gray-900">{{ pet.name }}</h2>
+              <p class="text-indigo-600 font-medium mb-2">{{ pet.breed }}</p>
+              <p class="text-gray-600 line-clamp-3">{{ pet.description }}</p>
+            </div>
+            <a
+              class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition"
+              [routerLink]="['/pet', pet.id]"
+            >
+              Ver detalles
+            </a>
           </div>
 
         </div>

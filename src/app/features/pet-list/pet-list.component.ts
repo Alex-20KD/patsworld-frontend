@@ -1,12 +1,13 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // <--- 1. IMPORTAR ESTO
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { PetService } from '../../core/services/pet.service';
 import { Pet } from '../../core/models/pet.model';
 
 @Component({
   selector: 'app-pet-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './pet-list.component.html',
   styleUrls: ['./pet-list.component.css']
 })
