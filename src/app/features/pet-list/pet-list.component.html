@@ -11,13 +11,13 @@
   @if (pets.length > 0) {
     <div class="max-w-7xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 
-      @for (pet of pets.filter((p) => !!p.id); track pet.id) {
+      @for (pet of pets; track pet.id) {
         <div class="bg-white overflow-hidden shadow-lg rounded-2xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100">
 
           <div class="relative h-64 w-full bg-gray-200">
             <img
               [src]="pet.imageUrl || 'https://via.placeholder.com/400x400?text=Cargando+Michi'"
-              (error)="($event.target as HTMLImageElement).src = 'https://via.placeholder.com/400x400?text=Cargando+Michi'"
+              (error)="handleImageError($event)"
               [alt]="pet.name || 'Michi en adopción'"
               class="w-full h-full object-cover"
             >
