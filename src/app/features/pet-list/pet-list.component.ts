@@ -1,23 +1,34 @@
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // <--- 1. IMPORTAR ESTO
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Pet } from '../../core/models/pet.model';
 import { PetService } from '../../core/services/pet.service';
+import { Pet } from '../../core/models/pet.model';
 
 @Component({
   selector: 'app-pet-list',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './pet-list.component.html',
-  styleUrl: './pet-list.component.css',
+  styleUrls: ['./pet-list.component.css']
 })
 export class PetListComponent implements OnInit {
   pets: Pet[] = [];
 
-  constructor(private readonly petService: PetService) {}
+  constructor(
+    private petService: PetService,
+    private cd: ChangeDetectorRef // <--- 2. INYECTARLO AQUÍ
+  ) {}
 
   ngOnInit(): void {
-    this.petService.getPets().subscribe((pets) => {
-      this.pets = pets;
+    console.log('Iniciando petición...');
+    this.petService.getPets().subscribe({
+      next: (data) => {
+        console.log('Datos recibidos:', data);
+        this.pets = data;
+
+        // <--- 3. EL TRUCO DE MAGIA: Forzar la actualización
+        this.cd.detectChanges();
+      },
+      error: (error) => console.error('Error:', error)
     });
   }
 }
