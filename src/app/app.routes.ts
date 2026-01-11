@@ -6,6 +6,10 @@ import { LoginComponent } from './features/auth/login.component';
 import { RegisterComponent } from './features/auth/register.component';
 import { PetCreateComponent } from './features/pet-create/pet-create.component';
 import { AuthService } from './core/services/auth.service';
+import { MyPetsComponent } from './features/my-pets/my-pets.component';
+import { AdoptedListComponent } from './features/adopted-list/adopted-list.component';
+import { AdminDashboardComponent } from './features/admin-dashboard/admin-dashboard.component';
+import { adminGuard } from './core/guards/admin.guard';
 
 const authGuard = () => {
 	const auth = inject(AuthService);
@@ -23,4 +27,7 @@ export const routes: Routes = [
 	{ path: 'login', component: LoginComponent },
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'publish', component: PetCreateComponent, canActivate: [authGuard] },
+	{ path: 'my-pets', component: MyPetsComponent, canActivate: [authGuard] },
+	{ path: 'adopted', component: AdoptedListComponent },
+	{ path: 'admin', component: AdminDashboardComponent, canActivate: [adminGuard] },
 ];

@@ -1,0 +1,139 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-center justify-between mb-10">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">Panel de Administrador</h1>
+        <p class="text-gray-500">Resumen de actividad.</p>
+      </div>
+    </div>
+
+    @if (loading) {
+      <div class="text-center text-gray-500">Cargando estadísticas...</div>
+    }
+
+    @if (error) {
+      <div class="text-red-600 bg-red-50 border border-red-100 rounded-lg px-4 py-2">{{ error }}</div>
+    }
+
+    @if (!loading && stats) {
+      <div class="mt-6 bg-white rounded-2xl shadow-md border border-gray-100 p-6" *ngIf="chartData">
+        <h3 class="text-xl font-bold text-gray-900 mb-4">Estadísticas Visuales</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="max-w-xl">
+            <canvas baseChart [data]="chartData" [type]="'pie'" [options]="chartOptions"></canvas>
+          </div>
+          <div class="space-y-3">
+            @for (card of breakdownCards; track card.label) {
+              <div class="flex items-center gap-3 bg-gray-50 border border-gray-100 rounded-xl p-4 shadow-sm">
+                <span class="h-3 w-3 rounded-full" [style.backgroundColor]="card.color"></span>
+                <div class="flex-1">
+                  <p class="text-sm font-semibold text-gray-600">{{ card.label }}</p>
+                  <p class="text-lg font-bold text-gray-900">{{ card.value }} <span class="text-sm text-gray-500">({{ card.percent }}%)</span></p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-3">
+        <button
+          type="button"
+          class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 text-left hover:shadow-lg transition"
+          (click)="selectView('users')"
+        >
+          <p class="text-sm font-semibold text-gray-500">Usuarios</p>
+          <p class="text-4xl font-extrabold text-gray-900 mt-2">{{ stats.totalUsers }}</p>
+        </button>
+        <button
+          type="button"
+          class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 text-left hover:shadow-lg transition"
+          (click)="selectView('available')"
+        >
+          <p class="text-sm font-semibold text-gray-500">En Adopción</p>
+          <p class="text-4xl font-extrabold text-indigo-600 mt-2">{{ stats.petsAvailable }}</p>
+        </button>
+        <button
+          type="button"
+          class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 text-left hover:shadow-lg transition"
+          (click)="selectView('adopted')"
+        >
+          <p class="text-sm font-semibold text-gray-500">Finales Felices</p>
+          <p class="text-4xl font-extrabold text-green-600 mt-2">{{ stats.petsAdopted }}</p>
+        </button>
+      </div>
+
+      @if (currentView) {
+        <div class="mt-10 bg-white rounded-2xl shadow-md border border-gray-100 p-6 overflow-auto">
+          @switch (currentView) {
+            @case ('users') {
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Usuarios</h3>
+              <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Email</th>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Rol</th>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Fecha Registro</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  @for (u of users; track u.id) {
+                    <tr>
+                      <td class="px-4 py-2">{{ u.email }}</td>
+                      <td class="px-4 py-2">{{ u.role }}</td>
+                      <td class="px-4 py-2">{{ u.createdAt | date: 'medium' }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
+            @case ('available') {
+              <h3 class="text-xl font-bold text-gray-900 mb-4">En Adopción</h3>
+              <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Nombre</th>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Raza</th>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Dueño</th>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Fecha Publicación</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  @for (p of petsAvailable; track p.id) {
+                    <tr>
+                      <td class="px-4 py-2">{{ p.name }}</td>
+                      <td class="px-4 py-2">{{ p.breed }}</td>
+                      <td class="px-4 py-2">{{ p.ownerId || 'N/D' }}</td>
+                      <td class="px-4 py-2">{{ p.createdAt | date: 'medium' }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
+            @case ('adopted') {
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Finales Felices</h3>
+              <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Nombre</th>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Raza</th>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Fecha Adopción</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  @for (p of petsAdopted; track p.id) {
+                    <tr>
+                      <td class="px-4 py-2">{{ p.name }}</td>
+                      <td class="px-4 py-2">{{ p.breed }}</td>
+                      <td class="px-4 py-2">{{ p.adoptionDate | date: 'medium' }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
+          }
+        </div>
+      }
+    }
+  </div>
+</div>

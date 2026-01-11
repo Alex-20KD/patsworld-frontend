@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Pet } from '../models/pet.model';
 
@@ -19,5 +19,15 @@ export class PetService {
 
   createPet(payload: FormData): Observable<Pet> {
     return this.http.post<Pet>(this.apiUrl, payload);
+  }
+
+  updatePet(id: string, payload: Partial<Pet>, ownerId: string): Observable<Pet> {
+    const headers = new HttpHeaders({ 'X-User-Id': ownerId });
+    return this.http.patch<Pet>(`${this.apiUrl}/${id}`, payload, { headers });
+  }
+
+  deletePet(id: string, ownerId: string): Observable<{ message: string }> {
+    const headers = new HttpHeaders({ 'X-User-Id': ownerId });
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`, { headers });
   }
 }

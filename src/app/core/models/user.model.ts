@@ -4,4 +4,5 @@ export interface User {
   fullName: string;
   phone: string;
   role: 'admin' | 'user';
+  createdAt?: string;
 }

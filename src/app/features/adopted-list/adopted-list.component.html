@@ -1,0 +1,28 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">Finales Felices</h1>
+    <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Mascotas que ya encontraron hogar.</p>
+  </div>
+
+  @if (pets.length > 0) {
+    <div class="max-w-7xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      @for (pet of pets; track pet.id) {
+        <div class="bg-white overflow-hidden shadow-lg rounded-2xl border border-gray-100">
+          <div class="relative h-64 w-full bg-gray-200">
+            <img [src]="pet.imageUrl" [alt]="pet.name" class="w-full h-full object-cover">
+            <span class="absolute top-4 right-4 px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full border border-green-200">Adoptado</span>
+          </div>
+          <div class="p-6">
+            <h2 class="text-2xl font-bold text-gray-900">{{ pet.name }}</h2>
+            <p class="text-indigo-600 font-medium mb-2">{{ pet.breed }}</p>
+            <p class="text-gray-600 line-clamp-3">{{ pet.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (pets.length === 0) {
+    <div class="text-center mt-20 text-gray-500">Aún no hay registros de adopciones.</div>
+  }
+</div>

@@ -29,7 +29,7 @@
           (click)="contactOwner()"
           class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-200"
         >
-          Solicitar Adopción
+          {{ auth.isLoggedIn ? 'Solicitar Adopción' : '🔒 Inicia sesión para adoptar' }}
         </button>
       </div>
 

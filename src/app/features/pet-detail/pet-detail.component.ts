@@ -18,7 +18,7 @@ export class PetDetailComponent implements OnInit {
   private petService = inject(PetService);
   private cd = inject(ChangeDetectorRef);
   private fb = inject(FormBuilder);
-  private auth = inject(AuthService);
+  public auth = inject(AuthService);
   private router = inject(Router);
 
   pet?: Pet;
@@ -49,6 +49,12 @@ export class PetDetailComponent implements OnInit {
   }
 
   contactOwner(): void {
+    if (!this.auth.isLoggedIn) {
+      alert('Debes iniciar sesión para contactar al dueño');
+      this.router.navigate(['/login']);
+      return;
+    }
+
     if (!this.pet) {
       return;
     }

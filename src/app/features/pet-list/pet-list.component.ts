@@ -37,4 +37,8 @@ export class PetListComponent implements OnInit {
     const target = event.target as HTMLImageElement;
     target.src = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_November_2010-1a.jpg';
   }
+
+  get availablePets(): Pet[] {
+    return this.pets.filter((pet) => !pet.isAdopted);
+  }
 }

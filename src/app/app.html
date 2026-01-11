@@ -5,6 +5,10 @@
 		<nav class="flex items-center gap-3 text-sm font-semibold text-gray-700">
 			@if (auth.user$ | async; as user) {
 				<a routerLink="/publish" class="px-3 py-2 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Publicar Mascota</a>
+				<a routerLink="/my-pets" class="px-3 py-2 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Mis Mascotas</a>
+				@if (user.role === 'admin') {
+					<a routerLink="/admin" class="px-3 py-2 rounded-lg bg-yellow-100 text-yellow-800 hover:bg-yellow-200">Panel Admin</a>
+				}
 				<span class="text-gray-600">Hola, {{ user.fullName }}</span>
 				<button
 					class="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700"
@@ -16,6 +20,7 @@
 				<a routerLink="/login" class="px-3 py-2 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Entrar</a>
 				<a routerLink="/register" class="px-3 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700">Registrarse</a>
 			}
+			<a routerLink="/adopted" class="px-3 py-2 rounded-lg bg-gray-50 text-gray-700 hover:bg-gray-100">Finales Felices</a>
 		</nav>
 	</div>
 </header>
