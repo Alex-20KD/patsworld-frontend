@@ -16,4 +16,8 @@ export class PetService {
   getPetById(id: string): Observable<Pet> {
     return this.http.get<Pet>(`${this.apiUrl}/${id}`);
   }
+
+  createPet(payload: FormData): Observable<Pet> {
+    return this.http.post<Pet>(this.apiUrl, payload);
+  }
 }

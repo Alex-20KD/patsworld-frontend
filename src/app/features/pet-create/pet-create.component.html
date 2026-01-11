@@ -1,0 +1,48 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">Publicar Mascota</h1>
+        <p class="text-gray-500 mt-1">Comparte los datos de tu michi para adopción.</p>
+      </div>
+      <a routerLink="/" class="text-sm text-indigo-600 hover:text-indigo-700 font-semibold">Volver</a>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <label class="block">
+          <span class="text-sm font-semibold text-gray-700">Nombre</span>
+          <input formControlName="name" type="text" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ej. Michi Tester" />
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold text-gray-700">Raza</span>
+          <input formControlName="breed" type="text" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ej. Siamés" />
+        </label>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <label class="block">
+          <span class="text-sm font-semibold text-gray-700">Edad</span>
+          <input formControlName="age" type="number" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ej. 2" />
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold text-gray-700">Imagen</span>
+          <input type="file" accept="image/*" (change)="onFileChange($event)" class="mt-1 w-full" />
+        </label>
+      </div>
+
+      <label class="block">
+        <span class="text-sm font-semibold text-gray-700">Descripción</span>
+        <textarea formControlName="description" rows="4" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Cuenta algo sobre el michi"></textarea>
+      </label>
+
+      @if (error) {
+        <div class="text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-4 py-2">{{ error }}</div>
+      }
+
+      <button type="submit" [disabled]="submitting" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:opacity-60">
+        {{ submitting ? 'Publicando...' : 'Publicar Mascota' }}
+      </button>
+    </form>
+  </div>
+</div>

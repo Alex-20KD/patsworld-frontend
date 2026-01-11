@@ -35,6 +35,6 @@ export class PetListComponent implements OnInit {
 
   handleImageError(event: Event): void {
     const target = event.target as HTMLImageElement;
-    target.src = 'https://via.placeholder.com/400x400?text=Gatito+no+encontrado';
+    target.src = 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_November_2010-1a.jpg';
   }
 }
