@@ -48,6 +48,20 @@ export class PetDetailComponent implements OnInit {
     this.showForm = !this.showForm;
   }
 
+  contactOwner(): void {
+    if (!this.pet) {
+      return;
+    }
+
+    const phone = '593999999999';
+    const message = encodeURIComponent(
+      `Hola, estoy interesado en adoptar a ${this.pet.name}, el ${this.pet.breed}. ¿Sigue disponible?`,
+    );
+
+    const whatsappUrl = `https://wa.me/${phone}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  }
+
   onSubmit(): void {
     if (!this.pet) {
       return;
