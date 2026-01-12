@@ -40,6 +40,10 @@
         <div class="text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-4 py-2">{{ error }}</div>
       }
 
+      @if (success) {
+        <div class="text-sm text-green-700 bg-green-50 border border-green-100 rounded-lg px-4 py-2">{{ success }}</div>
+      }
+
       <button type="submit" [disabled]="submitting" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:opacity-60">
         {{ submitting ? 'Publicando...' : 'Publicar Mascota' }}
       </button>

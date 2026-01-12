@@ -35,6 +35,12 @@ export class AdminService {
     return this.http.get<User[]>(`${this.baseUrl}/users`, { headers });
   }
 
+  toggleUserBan(id: string, isBanned: boolean): Observable<User> {
+    const role = this.auth.currentUser?.role ?? '';
+    const headers = new HttpHeaders({ 'X-User-Role': role });
+    return this.http.patch<User>(`${this.baseUrl}/users/${id}/ban`, { isBanned }, { headers });
+  }
+
   getPetsAvailable(): Observable<Pet[]> {
     const role = this.auth.currentUser?.role ?? '';
     const headers = new HttpHeaders({ 'X-User-Role': role });
@@ -45,5 +51,23 @@ export class AdminService {
     const role = this.auth.currentUser?.role ?? '';
     const headers = new HttpHeaders({ 'X-User-Role': role });
     return this.http.get<Pet[]>(`${this.baseUrl}/pets-adopted`, { headers });
+  }
+
+  getPetsPending(): Observable<Pet[]> {
+    const role = this.auth.currentUser?.role ?? '';
+    const headers = new HttpHeaders({ 'X-User-Role': role });
+    return this.http.get<Pet[]>(`${this.baseUrl}/pets-pending`, { headers });
+  }
+
+  approvePet(id: string): Observable<Pet> {
+    const role = this.auth.currentUser?.role ?? '';
+    const headers = new HttpHeaders({ 'X-User-Role': role });
+    return this.http.patch<Pet>(`${this.baseUrl}/pets/${id}/approve`, {}, { headers });
+  }
+
+  deletePet(id: string): Observable<{ message: string }> {
+    const role = this.auth.currentUser?.role ?? '';
+    const headers = new HttpHeaders({ 'X-User-Role': role });
+    return this.http.delete<{ message: string }>(`${this.baseUrl}/pets/${id}`, { headers });
   }
 }

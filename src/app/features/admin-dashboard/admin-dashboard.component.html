@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <div class="grid gap-6 md:grid-cols-3">
+      <div class="grid gap-6 md:grid-cols-4">
         <button
           type="button"
           class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 text-left hover:shadow-lg transition"
@@ -61,6 +61,14 @@
           <p class="text-sm font-semibold text-gray-500">Finales Felices</p>
           <p class="text-4xl font-extrabold text-green-600 mt-2">{{ stats.petsAdopted }}</p>
         </button>
+        <button
+          type="button"
+          class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 text-left hover:shadow-lg transition"
+          (click)="selectPending()"
+        >
+          <p class="text-sm font-semibold text-gray-500">Pendientes de Aprobación</p>
+          <p class="text-4xl font-extrabold text-amber-600 mt-2">{{ petsPending.length || '—' }}</p>
+        </button>
       </div>
 
       @if (currentView) {
@@ -74,6 +82,7 @@
                     <th class="px-4 py-2 text-left font-semibold text-gray-600">Email</th>
                     <th class="px-4 py-2 text-left font-semibold text-gray-600">Rol</th>
                     <th class="px-4 py-2 text-left font-semibold text-gray-600">Fecha Registro</th>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Acciones</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -82,6 +91,16 @@
                       <td class="px-4 py-2">{{ u.email }}</td>
                       <td class="px-4 py-2">{{ u.role }}</td>
                       <td class="px-4 py-2">{{ u.createdAt | date: 'medium' }}</td>
+                      <td class="px-4 py-2">
+                        <button
+                          type="button"
+                          (click)="toggleUserBan(u)"
+                          class="px-3 py-1.5 rounded-lg text-sm font-semibold shadow-sm border"
+                          [ngClass]="u.isBanned ? 'bg-gray-100 text-gray-700 border-gray-200' : 'bg-red-100 text-red-700 border-red-200'"
+                        >
+                          {{ u.isBanned ? 'Desbloquear' : 'Bloquear' }}
+                        </button>
+                      </td>
                     </tr>
                   }
                 </tbody>
@@ -130,6 +149,43 @@
                   }
                 </tbody>
               </table>
+            }
+            @case ('pending') {
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Pendientes de Aprobación</h3>
+              @if (petsPending.length === 0) {
+                <p class="text-gray-600">No hay publicaciones pendientes.</p>
+              } @else {
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  @for (p of petsPending; track p.id) {
+                    <div class="border border-gray-200 rounded-xl p-4 bg-gray-50 shadow-sm">
+                      <img
+                        class="w-full h-56 object-cover rounded-t-lg"
+                        [src]="p.imageUrl"
+                        [alt]="p.name"
+                      />
+                      <p class="text-sm font-semibold text-gray-500 mt-3 mb-1">{{ p.breed || 'Sin raza' }}</p>
+                      <h4 class="text-lg font-bold text-gray-900">{{ p.name }}</h4>
+                      <p class="text-xs text-gray-500">Publicado: {{ p.createdAt | date: 'medium' }}</p>
+                      <div class="mt-4 flex gap-3">
+                        <button
+                          type="button"
+                          class="flex-1 px-3 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold shadow-sm hover:bg-green-700"
+                          (click)="approvePet(p)"
+                        >
+                          Aprobar
+                        </button>
+                        <button
+                          type="button"
+                          class="flex-1 px-3 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold shadow-sm hover:bg-red-700"
+                          (click)="rejectPet(p)"
+                        >
+                          Rechazar
+                        </button>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
             }
           }
         </div>

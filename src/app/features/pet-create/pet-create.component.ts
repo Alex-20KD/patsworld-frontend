@@ -20,6 +20,7 @@ export class PetCreateComponent {
 
   submitting = false;
   error?: string;
+  success?: string;
   selectedFile?: File;
 
   form = this.fb.group({
@@ -53,6 +54,7 @@ export class PetCreateComponent {
 
     this.submitting = true;
     this.error = undefined;
+    this.success = undefined;
 
     const currentUser = this.auth.currentUser;
     const formData = new FormData();
@@ -66,6 +68,9 @@ export class PetCreateComponent {
     this.petService.createPet(formData).subscribe({
       next: () => {
         this.submitting = false;
+        this.success = '¡Mascota enviada! Un administrador revisará tu publicación pronto';
+        this.form.reset();
+        this.selectedFile = undefined;
         this.router.navigate(['/']);
       },
       error: (err) => {

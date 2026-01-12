@@ -17,10 +17,11 @@ export class AdminDashboardComponent implements OnInit {
   loading = true;
   error?: string;
 
-  currentView: 'users' | 'available' | 'adopted' | null = null;
+  currentView: 'users' | 'available' | 'adopted' | 'pending' | null = null;
   users: User[] = [];
   petsAvailable: Pet[] = [];
   petsAdopted: Pet[] = [];
+  petsPending: Pet[] = [];
 
   chartData?: ChartData<'pie', number[], string>;
   chartOptions: ChartOptions<'pie'> = {
@@ -101,6 +102,13 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
+  selectPending(): void {
+    this.currentView = 'pending';
+    if (this.petsPending.length === 0) {
+      this.loadPetsPending();
+    }
+  }
+
   private loadUsers(): void {
     this.adminService.getUsers().subscribe({
       next: (data) => {
@@ -109,6 +117,24 @@ export class AdminDashboardComponent implements OnInit {
       },
       error: (err) => {
         this.error = err?.error?.message ?? 'No se pudieron cargar los usuarios';
+      },
+    });
+  }
+
+  toggleUserBan(user: User): void {
+    const confirmMsg = user.isBanned
+      ? `¿Desbloquear a ${user.email}?`
+      : `¿Bloquear a ${user.email}?`;
+    const ok = confirm(confirmMsg);
+    if (!ok) return;
+
+    this.adminService.toggleUserBan(user.id, !user.isBanned).subscribe({
+      next: (updated) => {
+        this.users = this.users.map((u) => (u.id === updated.id ? { ...u, isBanned: updated.isBanned } : u));
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        this.error = err?.error?.message ?? 'No se pudo actualizar el estado del usuario';
       },
     });
   }
@@ -133,6 +159,53 @@ export class AdminDashboardComponent implements OnInit {
       },
       error: (err) => {
         this.error = err?.error?.message ?? 'No se pudieron cargar las mascotas adoptadas';
+      },
+    });
+  }
+
+  private loadPetsPending(): void {
+    this.adminService.getPetsPending().subscribe({
+      next: (data) => {
+        this.petsPending = data;
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        this.error = err?.error?.message ?? 'No se pudieron cargar las mascotas pendientes';
+      },
+    });
+  }
+
+  approvePet(pet: Pet): void {
+    this.adminService.approvePet(pet.id).subscribe({
+      next: () => {
+        this.petsPending = this.petsPending.filter((p) => p.id !== pet.id);
+        if (this.petsAvailable.length > 0) {
+          this.petsAvailable = [pet, ...this.petsAvailable];
+        }
+        if (this.stats) {
+          this.stats.petsAvailable += 1;
+        }
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        this.error = err?.error?.message ?? 'No se pudo aprobar la mascota';
+      },
+    });
+  }
+
+  rejectPet(pet: Pet): void {
+    const confirmMsg = `¿Rechazar la publicación de ${pet.name}?`;
+    if (!confirm(confirmMsg)) {
+      return;
+    }
+
+    this.adminService.deletePet(pet.id).subscribe({
+      next: () => {
+        this.petsPending = this.petsPending.filter((p) => p.id !== pet.id);
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        this.error = err?.error?.message ?? 'No se pudo rechazar la mascota';
       },
     });
   }
