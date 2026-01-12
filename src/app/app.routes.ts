@@ -10,6 +10,7 @@ import { MyPetsComponent } from './features/my-pets/my-pets.component';
 import { AdoptedListComponent } from './features/adopted-list/adopted-list.component';
 import { AdminDashboardComponent } from './features/admin-dashboard/admin-dashboard.component';
 import { adminGuard } from './core/guards/admin.guard';
+import { UserProfileComponent } from './features/user-profile/user-profile.component';
 
 const authGuard = () => {
 	const auth = inject(AuthService);
@@ -27,7 +28,9 @@ export const routes: Routes = [
 	{ path: 'login', component: LoginComponent },
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'publish', component: PetCreateComponent, canActivate: [authGuard] },
+	{ path: 'pets/edit/:id', component: PetCreateComponent, canActivate: [authGuard] },
 	{ path: 'my-pets', component: MyPetsComponent, canActivate: [authGuard] },
+	{ path: 'profile', component: UserProfileComponent, canActivate: [authGuard] },
 	{ path: 'adopted', component: AdoptedListComponent },
 	{ path: 'admin', component: AdminDashboardComponent, canActivate: [adminGuard] },
 ];

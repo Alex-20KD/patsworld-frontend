@@ -186,6 +186,46 @@
                   }
                 </div>
               }
+
+              <div class="mt-10">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Gestión de Usuarios</h3>
+                <div class="overflow-auto border border-gray-200 rounded-xl">
+                  <table class="min-w-full divide-y divide-gray-200 text-sm">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th class="px-4 py-2 text-left font-semibold text-gray-600">Nombre</th>
+                        <th class="px-4 py-2 text-left font-semibold text-gray-600">Email</th>
+                        <th class="px-4 py-2 text-left font-semibold text-gray-600">Rol Actual</th>
+                        <th class="px-4 py-2 text-left font-semibold text-gray-600">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                      @for (u of users; track u.id) {
+                        <tr>
+                          <td class="px-4 py-2">{{ u.fullName || 'Sin nombre' }}</td>
+                          <td class="px-4 py-2">{{ u.email }}</td>
+                          <td class="px-4 py-2 capitalize">{{ u.role }}</td>
+                          <td class="px-4 py-2">
+                            <button
+                              type="button"
+                              class="px-3 py-1.5 rounded-lg text-sm font-semibold text-white"
+                              [class.bg-blue-600]="u.role === 'user'"
+                              [class.hover:bg-blue-700]="u.role === 'user'"
+                              [class.bg-red-600]="u.role === 'admin'"
+                              [class.hover:bg-red-700]="u.role === 'admin'"
+                              [disabled]="u.id === auth.currentUser?.id"
+                              [class.opacity-60]="u.id === auth.currentUser?.id"
+                              (click)="changeRole(u)"
+                            >
+                              {{ u.role === 'admin' ? 'Degradar a Usuario' : 'Ascender a Admin' }}
+                            </button>
+                          </td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             }
           }
         </div>

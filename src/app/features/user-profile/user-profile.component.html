@@ -1,0 +1,62 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">Mi Perfil</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+      <label class="block">
+        <span class="text-sm font-semibold text-gray-700">Nombre</span>
+        <input
+          type="text"
+          formControlName="fullName"
+          class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+          placeholder="Tu nombre"
+        />
+      </label>
+
+      <label class="block">
+        <span class="text-sm font-semibold text-gray-700">Email</span>
+        <input
+          type="email"
+          formControlName="email"
+          class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+          placeholder="tu@email.com"
+        />
+      </label>
+
+      <label class="block">
+        <span class="text-sm font-semibold text-gray-700">Teléfono</span>
+        <input
+          type="text"
+          formControlName="phone"
+          class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+          placeholder="Ej. +52 55 1234 5678"
+        />
+      </label>
+
+      <label class="block">
+        <span class="text-sm font-semibold text-gray-700">Nueva Contraseña (opcional)</span>
+        <input
+          type="password"
+          formControlName="password"
+          class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+          placeholder="Dejar en blanco para mantener"
+        />
+      </label>
+
+      @if (error) {
+        <div class="text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-4 py-2">{{ error }}</div>
+      }
+      @if (success) {
+        <div class="text-sm text-green-700 bg-green-50 border border-green-100 rounded-lg px-4 py-2">{{ success }}</div>
+      }
+
+      <button
+        type="submit"
+        [disabled]="submitting"
+        class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:opacity-60"
+      >
+        {{ submitting ? 'Guardando...' : 'Guardar cambios' }}
+      </button>
+    </form>
+  </div>
+</div>

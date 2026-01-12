@@ -32,6 +32,12 @@
               <p class="text-indigo-600 font-semibold">{{ pet.breed }}</p>
               <p class="text-gray-600 line-clamp-2">{{ pet.description }}</p>
               <div class="flex gap-2 pt-2">
+                <a
+                  [routerLink]="['/pets/edit', pet.id]"
+                  class="flex-1 px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 text-center"
+                >
+                  Editar
+                </a>
                 <button
                   type="button"
                   (click)="markAdopted(pet)"

@@ -14,6 +14,7 @@ export interface AdminStats {
 @Injectable({ providedIn: 'root' })
 export class AdminService {
   private readonly baseUrl = 'http://localhost:3000/admin';
+  private readonly usersUrl = 'http://localhost:3000/users';
 
   constructor(private readonly http: HttpClient, private readonly auth: AuthService) {}
 
@@ -35,10 +36,22 @@ export class AdminService {
     return this.http.get<User[]>(`${this.baseUrl}/users`, { headers });
   }
 
+  getAllUsers(): Observable<User[]> {
+    const role = this.auth.currentUser?.role ?? '';
+    const headers = new HttpHeaders({ 'X-User-Role': role });
+    return this.http.get<User[]>(this.usersUrl, { headers });
+  }
+
   toggleUserBan(id: string, isBanned: boolean): Observable<User> {
     const role = this.auth.currentUser?.role ?? '';
     const headers = new HttpHeaders({ 'X-User-Role': role });
     return this.http.patch<User>(`${this.baseUrl}/users/${id}/ban`, { isBanned }, { headers });
+  }
+
+  updateUserRole(id: string, role: 'admin' | 'user'): Observable<User> {
+    const currentRole = this.auth.currentUser?.role ?? '';
+    const headers = new HttpHeaders({ 'X-User-Role': currentRole });
+    return this.http.patch<User>(`${this.usersUrl}/${id}/role`, { role }, { headers });
   }
 
   getPetsAvailable(): Observable<Pet[]> {

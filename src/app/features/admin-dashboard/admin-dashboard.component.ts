@@ -5,6 +5,7 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { AdminService, AdminStats } from '../../core/services/admin.service';
 import { User } from '../../core/models/user.model';
 import { Pet } from '../../core/models/pet.model';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -31,7 +32,7 @@ export class AdminDashboardComponent implements OnInit {
     },
   };
 
-  constructor(private adminService: AdminService, private cd: ChangeDetectorRef) {}
+  constructor(private adminService: AdminService, public auth: AuthService, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.adminService.getStats().subscribe({
@@ -46,6 +47,8 @@ export class AdminDashboardComponent implements OnInit {
         this.loading = false;
       },
     });
+
+    this.loadUsers();
   }
 
   get breakdownCards(): Array<{ label: string; value: number; color: string; percent: number }> {
@@ -110,7 +113,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   private loadUsers(): void {
-    this.adminService.getUsers().subscribe({
+    this.adminService.getAllUsers().subscribe({
       next: (data) => {
         this.users = data;
         this.cd.detectChanges();
@@ -135,6 +138,25 @@ export class AdminDashboardComponent implements OnInit {
       },
       error: (err) => {
         this.error = err?.error?.message ?? 'No se pudo actualizar el estado del usuario';
+      },
+    });
+  }
+
+  changeRole(user: User): void {
+    const targetRole: 'admin' | 'user' = user.role === 'admin' ? 'user' : 'admin';
+    const confirmMsg =
+      targetRole === 'admin'
+        ? `¿Ascender a ${user.email} a administrador?`
+        : `¿Degradar a ${user.email} a usuario?`;
+    const ok = confirm(confirmMsg);
+    if (!ok) return;
+
+    this.adminService.updateUserRole(user.id, targetRole).subscribe({
+      next: () => {
+        this.loadUsers();
+      },
+      error: (err) => {
+        this.error = err?.error?.message ?? 'No se pudo actualizar el rol';
       },
     });
   }

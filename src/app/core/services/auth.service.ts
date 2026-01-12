@@ -11,6 +11,7 @@ interface AuthResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly apiUrl = 'http://localhost:3000/auth';
+  private readonly usersUrl = 'http://localhost:3000/users';
   private readonly storageKey = 'patsworld:user';
   private userSubject = new BehaviorSubject<User | null>(this.readStoredUser());
 
@@ -53,6 +54,23 @@ export class AuthService {
     return this.http.post<User>(`${this.apiUrl}/register`, payload).pipe(
       tap((user) => this.setUser(user)),
     );
+  }
+
+  updateProfile(payload: { fullName: string; email: string; phone?: string; password?: string }): Observable<User> {
+    const userId = this.userSubject.value?.id;
+    if (!userId) {
+      throw new Error('Usuario no autenticado');
+    }
+
+    const headers: Record<string, string> = { 'X-User-Id': userId };
+
+    return this.http.patch<User>(`${this.usersUrl}/profile`, payload, { headers }).pipe(
+      tap((user) => this.setUser(user)),
+    );
+  }
+
+  refreshUser(user: User): void {
+    this.setUser(user);
   }
 
   logout(): void {
