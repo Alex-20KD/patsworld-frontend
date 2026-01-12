@@ -7,6 +7,58 @@
       </div>
     </div>
 
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8" *ngIf="stats">
+      <div class="bg-white rounded-2xl shadow-sm border border-nature-brown/20 p-4 flex items-center gap-3">
+        <div class="h-12 w-12 rounded-xl bg-nature-green/10 flex items-center justify-center text-nature-green">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 9.5c1.5.5 3.5-2 3.5-3.5m0 0c0-1-.5-2-1.5-2s-1.5 1-1.5 2 .5 2 1.5 2zm0 0c1.5 0 3 1 3.5 2.5m8.5 6.5c-1.5-.5-3.5 2-3.5 3.5m0 0c0 1 .5 2 1.5 2s1.5-1 1.5-2-.5-2-1.5-2zm0 0c-1.5 0-3-1-3.5-2.5M9 12.75s1.5 1 3 .75 2.5-1.5 4-1.5 1.5.5 1.5.5" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-nature-brown">Mascotas Publicadas</p>
+          <p class="text-2xl font-bold text-nature-green">{{ stats.totalPets }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-nature-brown/20 p-4 flex items-center gap-3">
+        <div class="h-12 w-12 rounded-xl bg-nature-green/10 flex items-center justify-center text-nature-green">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-nature-brown">Usuarios Registrados</p>
+          <p class="text-2xl font-bold text-nature-green">{{ stats.totalUsers }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-nature-brown/20 p-4 flex items-center gap-3">
+        <div class="h-12 w-12 rounded-xl bg-nature-green/10 flex items-center justify-center text-nature-green">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.75L12 4l9 5.75-9 5.75L3 9.75z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 14.25L12 20l9-5.75" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-nature-brown">Finales Felices</p>
+          <p class="text-2xl font-bold text-nature-green">{{ stats.petsAdopted }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-nature-brown/20 p-4 flex items-center gap-3">
+        <div class="h-12 w-12 rounded-xl bg-nature-green/10 flex items-center justify-center text-nature-green">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h6m-6 4h4" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h14a2 2 0 012 2v10l-4-3H5a2 2 0 01-2-2V7a2 2 0 012-2z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-nature-brown">Pendientes de Aprobación</p>
+          <p class="text-2xl font-bold text-nature-green">{{ stats.petsPending }}</p>
+        </div>
+      </div>
+    </div>
+
     @if (loading) {
       <div class="text-center text-gray-500">Cargando estadísticas...</div>
     }
@@ -39,35 +91,31 @@
       <div class="grid gap-6 md:grid-cols-4">
         <button
           type="button"
-          class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 text-left hover:shadow-lg transition"
+          class="bg-nature-green text-white rounded-2xl shadow-md border border-nature-brown/30 p-6 text-left hover:-translate-y-1 hover:bg-nature-green/90 transition-all"
           (click)="selectView('users')"
         >
-          <p class="text-sm font-semibold text-gray-500">Usuarios</p>
-          <p class="text-4xl font-extrabold text-gray-900 mt-2">{{ stats.totalUsers }}</p>
+          <p class="text-sm font-semibold">Gestionar Usuarios</p>
         </button>
         <button
           type="button"
-          class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 text-left hover:shadow-lg transition"
+          class="bg-nature-green text-white rounded-2xl shadow-md border border-nature-brown/30 p-6 text-left hover:-translate-y-1 hover:bg-nature-green/90 transition-all"
           (click)="selectView('available')"
         >
-          <p class="text-sm font-semibold text-gray-500">En Adopción</p>
-          <p class="text-4xl font-extrabold text-indigo-600 mt-2">{{ stats.petsAvailable }}</p>
+          <p class="text-sm font-semibold">En Adopción</p>
         </button>
         <button
           type="button"
-          class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 text-left hover:shadow-lg transition"
+          class="bg-nature-green text-white rounded-2xl shadow-md border border-nature-brown/30 p-6 text-left hover:-translate-y-1 hover:bg-nature-green/90 transition-all"
           (click)="selectView('adopted')"
         >
-          <p class="text-sm font-semibold text-gray-500">Finales Felices</p>
-          <p class="text-4xl font-extrabold text-green-600 mt-2">{{ stats.petsAdopted }}</p>
+          <p class="text-sm font-semibold">Finales Felices</p>
         </button>
         <button
           type="button"
-          class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 text-left hover:shadow-lg transition"
+          class="bg-nature-green text-white rounded-2xl shadow-md border border-nature-brown/30 p-6 text-left hover:-translate-y-1 hover:bg-nature-green/90 transition-all"
           (click)="selectPending()"
         >
-          <p class="text-sm font-semibold text-gray-500">Pendientes de Aprobación</p>
-          <p class="text-4xl font-extrabold text-amber-600 mt-2">{{ petsPending.length || '—' }}</p>
+          <p class="text-sm font-semibold">Pendientes de Aprobación</p>
         </button>
       </div>
 

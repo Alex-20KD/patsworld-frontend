@@ -7,8 +7,10 @@ import { Pet } from '../models/pet.model';
 
 export interface AdminStats {
   totalUsers: number;
+  totalPets: number;
   petsAvailable: number;
   petsAdopted: number;
+  petsPending: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -17,6 +19,10 @@ export class AdminService {
   private readonly usersUrl = 'http://localhost:3000/users';
 
   constructor(private readonly http: HttpClient, private readonly auth: AuthService) {}
+
+  getDashboardStats(): Observable<AdminStats> {
+    return this.getStats();
+  }
 
   getStats(): Observable<AdminStats> {
     const role = this.auth.currentUser?.role ?? '';

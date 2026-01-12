@@ -35,7 +35,7 @@ export class AdminDashboardComponent implements OnInit {
   constructor(private adminService: AdminService, public auth: AuthService, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.adminService.getStats().subscribe({
+    this.adminService.getDashboardStats().subscribe({
       next: (data) => {
         this.stats = data;
         this.loadChart();
@@ -52,7 +52,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   get breakdownCards(): Array<{ label: string; value: number; color: string; percent: number }> {
-    const available = this.stats?.petsAvailable ?? 0;
+    const available = this.stats?.petsAvailable ?? Math.max((this.stats?.totalPets ?? 0) - (this.stats?.petsAdopted ?? 0) - (this.stats?.petsPending ?? 0), 0);
     const adopted = this.stats?.petsAdopted ?? 0;
     const total = available + adopted || 1; // avoid division by zero
     return [
@@ -205,7 +205,8 @@ export class AdminDashboardComponent implements OnInit {
           this.petsAvailable = [pet, ...this.petsAvailable];
         }
         if (this.stats) {
-          this.stats.petsAvailable += 1;
+          this.stats.petsAvailable = (this.stats.petsAvailable ?? 0) + 1;
+          this.stats.petsPending = Math.max((this.stats.petsPending ?? 1) - 1, 0);
         }
         this.cd.detectChanges();
       },
