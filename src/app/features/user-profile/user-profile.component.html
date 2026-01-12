@@ -1,44 +1,44 @@
-<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
-    <h1 class="text-2xl font-bold text-gray-900 mb-6">Mi Perfil</h1>
+<div class="min-h-screen bg-transparent py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-xl mx-auto bg-nature-cream shadow-sm rounded-2xl p-8 border border-nature-brown/30">
+    <h1 class="text-2xl font-bold text-nature-green mb-6">Mi Perfil</h1>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
       <label class="block">
-        <span class="text-sm font-semibold text-gray-700">Nombre</span>
+        <span class="text-sm font-semibold text-nature-brown">Nombre</span>
         <input
           type="text"
           formControlName="fullName"
-          class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+          class="mt-1 w-full rounded-lg border-nature-brown/50 focus:border-nature-green focus:ring-nature-green"
           placeholder="Tu nombre"
         />
       </label>
 
       <label class="block">
-        <span class="text-sm font-semibold text-gray-700">Email</span>
+        <span class="text-sm font-semibold text-nature-brown">Email</span>
         <input
           type="email"
           formControlName="email"
-          class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+          class="mt-1 w-full rounded-lg border-nature-brown/50 focus:border-nature-green focus:ring-nature-green"
           placeholder="tu@email.com"
         />
       </label>
 
       <label class="block">
-        <span class="text-sm font-semibold text-gray-700">Teléfono</span>
+        <span class="text-sm font-semibold text-nature-brown">Teléfono</span>
         <input
           type="text"
           formControlName="phone"
-          class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+          class="mt-1 w-full rounded-lg border-nature-brown/50 focus:border-nature-green focus:ring-nature-green"
           placeholder="Ej. +52 55 1234 5678"
         />
       </label>
 
       <label class="block">
-        <span class="text-sm font-semibold text-gray-700">Nueva Contraseña (opcional)</span>
+        <span class="text-sm font-semibold text-nature-brown">Nueva Contraseña (opcional)</span>
         <input
           type="password"
           formControlName="password"
-          class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+          class="mt-1 w-full rounded-lg border-nature-brown/50 focus:border-nature-green focus:ring-nature-green"
           placeholder="Dejar en blanco para mantener"
         />
       </label>
@@ -53,7 +53,7 @@
       <button
         type="submit"
         [disabled]="submitting"
-        class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:opacity-60"
+        class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-nature-light bg-nature-green rounded-xl hover:bg-[#4a572e] disabled:opacity-60"
       >
         {{ submitting ? 'Guardando...' : 'Guardar cambios' }}
       </button>

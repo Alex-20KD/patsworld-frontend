@@ -1,47 +1,47 @@
-<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
+<div class="min-h-screen bg-transparent py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto bg-nature-cream shadow-sm rounded-2xl p-8 border border-nature-brown/30">
     <div class="flex items-center justify-between mb-8">
       <div>
-        <h1 class="text-3xl font-bold text-gray-900">Publicar Mascota</h1>
-        <p class="text-gray-500 mt-1">Comparte los datos de tu michi para adopción.</p>
+        <h1 class="text-3xl font-bold text-nature-green">Publicar Mascota</h1>
+        <p class="text-gray-700 mt-1">Comparte los datos de tu michi para adopción.</p>
       </div>
-      <a routerLink="/" class="text-sm text-indigo-600 hover:text-indigo-700 font-semibold">Volver</a>
+      <a routerLink="/" class="text-sm text-nature-brown hover:text-nature-brown/80 font-semibold">Volver</a>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <label class="block">
-          <span class="text-sm font-semibold text-gray-700">Nombre</span>
-          <input formControlName="name" type="text" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ej. Michi Tester" />
+          <span class="text-sm font-semibold text-nature-brown">Nombre</span>
+          <input formControlName="name" type="text" class="mt-1 w-full rounded-lg border-nature-brown/50 focus:border-nature-green focus:ring-nature-green" placeholder="Ej. Michi Tester" />
         </label>
         <label class="block">
-          <span class="text-sm font-semibold text-gray-700">Tipo de Mascota</span>
-          <select formControlName="species" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+          <span class="text-sm font-semibold text-nature-brown">Tipo de Mascota</span>
+          <select formControlName="species" class="mt-1 w-full rounded-lg border-nature-brown/50 focus:border-nature-green focus:ring-nature-green">
             <option value="">Selecciona</option>
             <option value="Perro">Perro</option>
             <option value="Gato">Gato</option>
           </select>
         </label>
         <label class="block">
-          <span class="text-sm font-semibold text-gray-700">Raza</span>
-          <input formControlName="breed" type="text" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ej. Siamés" />
+          <span class="text-sm font-semibold text-nature-brown">Raza</span>
+          <input formControlName="breed" type="text" class="mt-1 w-full rounded-lg border-nature-brown/50 focus:border-nature-green focus:ring-nature-green" placeholder="Ej. Siamés" />
         </label>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <label class="block">
-          <span class="text-sm font-semibold text-gray-700">Edad</span>
-          <input formControlName="age" type="number" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ej. 2" />
+          <span class="text-sm font-semibold text-nature-brown">Edad</span>
+          <input formControlName="age" type="number" class="mt-1 w-full rounded-lg border-nature-brown/50 focus:border-nature-green focus:ring-nature-green" placeholder="Ej. 2" />
         </label>
         <label class="block">
-          <span class="text-sm font-semibold text-gray-700">Imagen</span>
+          <span class="text-sm font-semibold text-nature-brown">Imagen</span>
           <input type="file" accept="image/*" (change)="onFileChange($event)" class="mt-1 w-full" />
         </label>
       </div>
 
       <label class="block">
-        <span class="text-sm font-semibold text-gray-700">Descripción</span>
-        <textarea formControlName="description" rows="4" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Cuenta algo sobre el michi"></textarea>
+        <span class="text-sm font-semibold text-nature-brown">Descripción</span>
+        <textarea formControlName="description" rows="4" class="mt-1 w-full rounded-lg border-nature-brown/50 focus:border-nature-green focus:ring-nature-green" placeholder="Cuenta algo sobre el michi"></textarea>
       </label>
 
       @if (error) {
@@ -52,7 +52,7 @@
         <div class="text-sm text-green-700 bg-green-50 border border-green-100 rounded-lg px-4 py-2">{{ success }}</div>
       }
 
-      <button type="submit" [disabled]="submitting" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:opacity-60">
+      <button type="submit" [disabled]="submitting" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-nature-light bg-nature-green rounded-xl hover:bg-[#4a572e] disabled:opacity-60">
         {{ submitting ? (isEditMode ? 'Guardando...' : 'Publicando...') : (isEditMode ? 'Guardar Cambios' : 'Publicar Mascota') }}
       </button>
     </form>

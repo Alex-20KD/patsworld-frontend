@@ -1,59 +1,18 @@
-<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-nature-light/80 py-12 px-4 sm:px-6 lg:px-8">
   <div class="text-center mb-12">
-    <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
+    <h1 class="text-4xl font-extrabold text-nature-green tracking-tight sm:text-5xl">
       🐾 PatsWorld
     </h1>
-    <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+    <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto">
       Encuentra a tu compañero perfecto.
     </p>
-  </div>
-
-  <div class="max-w-7xl mx-auto mb-8 bg-white shadow-sm border border-gray-100 rounded-2xl p-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-    <div class="flex flex-col w-full md:w-1/4">
-      <label class="text-sm font-semibold text-gray-700 mb-1">Tipo</label>
-      <select
-        class="w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-        [(ngModel)]="selectedSpecies"
-      >
-        <option value="">Todos</option>
-        <option value="Perro">Perro</option>
-        <option value="Gato">Gato</option>
-      </select>
-    </div>
-    <div class="flex flex-col w-full md:w-1/3">
-      <label class="text-sm font-semibold text-gray-700 mb-1">Raza</label>
-      <input
-        type="text"
-        class="w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-        placeholder="Ej. Bulldog"
-        [(ngModel)]="searchBreed"
-      />
-    </div>
-    <div class="flex flex-col w-full md:w-1/5">
-      <label class="text-sm font-semibold text-gray-700 mb-1">Edad</label>
-      <input
-        type="number"
-        class="w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-        placeholder="Ej. 2"
-        [(ngModel)]="searchAge"
-      />
-    </div>
-    <div class="w-full md:w-auto flex md:justify-end">
-      <button
-        type="button"
-        class="w-full md:w-auto inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
-        (click)="onFilter()"
-      >
-        Filtrar
-      </button>
-    </div>
   </div>
 
   @if (availablePets.length > 0) {
     <div class="max-w-7xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 
       @for (pet of availablePets; track pet.id) {
-        <div class="bg-white overflow-hidden shadow-lg rounded-2xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100">
+        <div class="bg-nature-cream overflow-hidden shadow-sm rounded-2xl transition-shadow duration-300 border-2 border-nature-brown">
 
           <div class="relative h-64 w-full bg-gray-200">
             <img
@@ -65,7 +24,7 @@
 
             <div class="absolute top-4 right-4">
               @if (!pet.isAdopted) {
-                <span class="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full border border-green-200">
+                <span class="px-3 py-1 text-sm font-semibold text-nature-green bg-green-100 rounded-full border border-nature-green/30">
                   Disponible
                 </span>
               } @else {
@@ -78,12 +37,12 @@
 
           <div class="p-6 flex flex-col gap-3">
             <div>
-              <h2 class="text-2xl font-bold text-gray-900">{{ pet.name }}</h2>
-              <p class="text-indigo-600 font-medium mb-2">{{ pet.breed }}</p>
-              <p class="text-gray-600 line-clamp-3">{{ pet.description }}</p>
+              <h2 class="text-2xl font-bold text-nature-green">{{ pet.name }}</h2>
+              <p class="text-nature-brown font-medium mb-2">{{ pet.breed }}</p>
+              <p class="text-gray-700 line-clamp-3">{{ pet.description }}</p>
             </div>
             <a
-              class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition"
+              class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-nature-light bg-nature-green rounded-xl hover:bg-nature-green/90 transition"
               [routerLink]="['/pet', pet.id]"
             >
               Ver detalles
@@ -97,15 +56,83 @@
   @if (availablePets.length === 0) {
     @if (isLoading) {
       <div class="text-center mt-20">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-        <p class="mt-4 text-gray-500">Cargando michis...</p>
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-nature-green mx-auto"></div>
+        <p class="mt-4 text-gray-600">Cargando michis...</p>
         <p class="text-xs text-gray-400 mt-2">(Si esto no carga en 3s, revisa la consola)</p>
       </div>
     }
 
     <div *ngIf="!isLoading && pets.length === 0" class="text-center py-10">
-      <p class="text-gray-500 text-xl">😿 No encontramos mascotas con esos filtros.</p>
-      <button (click)="resetFilters()" class="mt-4 text-blue-600 underline">Ver todas las mascotas</button>
+      <p class="text-gray-600 text-xl">😿 No encontramos mascotas con esos filtros.</p>
+      <button (click)="resetFilters()" class="mt-4 text-nature-brown underline">Ver todas las mascotas</button>
+    </div>
+  }
+
+  <!-- Floating Filters -->
+  <button
+    type="button"
+    class="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-nature-brown text-nature-light shadow-md hover:bg-nature-brown/90 flex items-center justify-center text-lg font-bold transition transform hover:scale-105"
+    (click)="toggleFilters()"
+    aria-label="Abrir filtros"
+  >
+    🔍
+  </button>
+
+  @if (showFilters) {
+    <div
+      class="fixed bottom-24 right-6 w-80 bg-nature-cream rounded-xl shadow-md border-2 border-nature-brown p-4 space-y-4 transition-all duration-300"
+    >
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-nature-green">Filtros</h3>
+        <button type="button" class="text-xs text-nature-brown hover:text-nature-brown/80" (click)="toggleFilters()">Cerrar</button>
+      </div>
+      <div class="space-y-3">
+        <div class="flex flex-col">
+          <label class="text-sm font-semibold text-nature-brown mb-1">Tipo</label>
+          <select
+            class="w-full rounded-lg border-nature-brown/40 focus:border-nature-green focus:ring-nature-green/50"
+            [(ngModel)]="selectedSpecies"
+          >
+            <option value="">Todos</option>
+            <option value="Perro">Perro</option>
+            <option value="Gato">Gato</option>
+          </select>
+        </div>
+        <div class="flex flex-col">
+          <label class="text-sm font-semibold text-nature-brown mb-1">Raza</label>
+          <input
+            type="text"
+            class="w-full rounded-lg border-nature-brown/40 focus:border-nature-green focus:ring-nature-green/50"
+            placeholder="Ej. Bulldog"
+            [(ngModel)]="searchBreed"
+          />
+        </div>
+        <div class="flex flex-col">
+          <label class="text-sm font-semibold text-nature-brown mb-1">Edad</label>
+          <input
+            type="number"
+            class="w-full rounded-lg border-nature-brown/40 focus:border-nature-green focus:ring-nature-green/50"
+            placeholder="Ej. 2"
+            [(ngModel)]="searchAge"
+          />
+        </div>
+      </div>
+      <div class="flex gap-2 pt-2">
+        <button
+          type="button"
+          class="flex-1 inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-nature-light bg-nature-green rounded-xl hover:bg-nature-green/90"
+          (click)="onFilter()"
+        >
+          Aplicar
+        </button>
+        <button
+          type="button"
+          class="px-4 py-2 text-sm font-semibold text-nature-light bg-nature-brown rounded-xl hover:bg-nature-brown/90"
+          (click)="resetFilters()"
+        >
+          Limpiar
+        </button>
+      </div>
     </div>
   }
 </div>

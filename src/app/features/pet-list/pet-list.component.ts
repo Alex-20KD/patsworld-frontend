@@ -19,6 +19,7 @@ export class PetListComponent implements OnInit {
   searchBreed: string = '';
   searchAge?: number | null;
   isLoading = true;
+  showFilters = false;
 
   constructor(
     private petService: PetService,
@@ -60,6 +61,10 @@ export class PetListComponent implements OnInit {
     this.searchBreed = '';
     this.searchAge = undefined;
     this.loadPets();
+  }
+
+  toggleFilters(): void {
+    this.showFilters = !this.showFilters;
   }
 
   handleImageError(event: Event): void {

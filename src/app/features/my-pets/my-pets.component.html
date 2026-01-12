@@ -1,11 +1,11 @@
-<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-transparent py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-6xl mx-auto">
     <div class="flex items-center justify-between mb-8">
       <div>
-        <h1 class="text-3xl font-bold text-gray-900">Mis Mascotas</h1>
-        <p class="text-gray-500">Gestiona tus publicaciones.</p>
+        <h1 class="text-3xl font-bold text-nature-green">Mis Mascotas</h1>
+        <p class="text-gray-700">Gestiona tus publicaciones.</p>
       </div>
-      <a routerLink="/publish" class="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700">Publicar nueva</a>
+      <a routerLink="/publish" class="px-4 py-2 rounded-xl bg-nature-green text-nature-light text-sm font-semibold hover:bg-[#4a572e]">Publicar nueva</a>
     </div>
 
     @if (loading) {
@@ -23,25 +23,25 @@
     @if (pets.length > 0) {
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         @for (pet of pets; track pet.id) {
-          <div class="bg-white shadow-lg rounded-2xl border border-gray-100 overflow-hidden">
+          <div class="bg-white shadow-sm rounded-2xl border border-nature-brown/20 overflow-hidden">
             <div class="h-48 bg-gray-100">
               <img [src]="pet.imageUrl" [alt]="pet.name" class="w-full h-full object-cover">
             </div>
             <div class="p-5 space-y-2">
-              <h2 class="text-xl font-bold text-gray-900">{{ pet.name }}</h2>
-              <p class="text-indigo-600 font-semibold">{{ pet.breed }}</p>
-              <p class="text-gray-600 line-clamp-2">{{ pet.description }}</p>
+              <h2 class="text-xl font-bold text-nature-green">{{ pet.name }}</h2>
+              <p class="text-nature-brown font-semibold">{{ pet.breed }}</p>
+              <p class="text-gray-700 line-clamp-2">{{ pet.description }}</p>
               <div class="flex gap-2 pt-2">
                 <a
                   [routerLink]="['/pets/edit', pet.id]"
-                  class="flex-1 px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 text-center"
+                  class="flex-1 px-3 py-2 rounded-lg bg-nature-brown text-nature-light text-sm font-semibold hover:bg-nature-brown/90 text-center"
                 >
                   Editar
                 </a>
                 <button
                   type="button"
                   (click)="markAdopted(pet)"
-                  class="flex-1 px-3 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold hover:bg-green-700"
+                  class="flex-1 px-3 py-2 rounded-lg bg-nature-green text-nature-light text-sm font-semibold hover:bg-[#4a572e]"
                 >
                   ¡Ya se adoptó!
                 </button>

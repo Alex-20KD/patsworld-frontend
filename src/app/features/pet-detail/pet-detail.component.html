@@ -1,14 +1,14 @@
-<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" *ngIf="pet as pet">
-  <div class="max-w-6xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden flex flex-col lg:flex-row">
+<div class="min-h-screen bg-transparent py-12 px-4 sm:px-6 lg:px-8" *ngIf="pet as pet">
+  <div class="max-w-6xl mx-auto bg-nature-cream rounded-2xl overflow-hidden flex flex-col lg:flex-row border border-nature-brown/20 shadow-sm">
     <div class="lg:w-1/2 bg-gray-100">
       <img [src]="pet.imageUrl" [alt]="pet.name" class="w-full h-full object-cover">
     </div>
 
     <div class="lg:w-1/2 p-8 lg:p-12 flex flex-col gap-6">
       <div>
-        <p class="text-sm uppercase tracking-widest text-indigo-500 font-semibold">Ficha de adopción</p>
-          <h1 class="text-4xl font-extrabold text-gray-900 mt-2">{{ pet.name }}</h1>
-        <p class="text-lg text-gray-500">{{ pet.breed }} • {{ pet.age }} años</p>
+        <p class="text-sm uppercase tracking-widest text-nature-brown font-semibold">Ficha de adopción</p>
+          <h1 class="text-4xl font-extrabold text-nature-green mt-2">{{ pet.name }}</h1>
+        <p class="text-lg text-gray-700">{{ pet.breed }} • {{ pet.age }} años</p>
       </div>
 
       <p class="text-gray-700 leading-relaxed text-lg">{{ pet.description }}</p>
@@ -16,33 +16,33 @@
       <div class="flex items-center gap-3">
         <span
           class="px-3 py-1 text-sm font-semibold rounded-full"
-          [ngClass]="pet.isAdopted ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-green-100 text-green-800 border border-green-200'"
+          [ngClass]="pet.isAdopted ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-green-100 text-nature-green border border-nature-green/30'"
         >
           {{ pet.isAdopted ? 'Adoptado' : 'Disponible' }}
         </span>
       </div>
 
       <div class="mt-auto flex gap-4">
-        <a routerLink="/" class="text-indigo-600 font-semibold hover:underline">← Volver</a>
+        <a routerLink="/" class="text-nature-brown font-semibold hover:underline">← Volver</a>
         <button
           type="button"
           (click)="contactOwner()"
-          class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-200"
+          class="flex-1 bg-nature-green hover:bg-[#4a572e] text-nature-light text-lg font-semibold py-3 px-6 rounded-xl shadow-sm transition duration-200"
         >
           {{ auth.isLoggedIn ? 'Solicitar Adopción' : '🔒 Inicia sesión para adoptar' }}
         </button>
       </div>
 
       @if (showForm) {
-        <div class="mt-6 p-6 bg-gray-50 border border-gray-200 rounded-xl shadow-sm">
-          <h3 class="text-xl font-semibold text-gray-900 mb-4">Contacto directo</h3>
+        <div class="mt-6 p-6 bg-nature-light border border-nature-brown/20 rounded-xl shadow-sm">
+          <h3 class="text-xl font-semibold text-nature-green mb-4">Contacto directo</h3>
           <form [formGroup]="contactForm" class="space-y-4" (ngSubmit)="onSubmit()">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
+              <label class="block text-sm font-medium text-nature-brown mb-1">Nombre completo</label>
               <input
                 type="text"
                 formControlName="fullName"
-                class="w-full rounded-lg border border-gray-200 px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600"
+                class="w-full rounded-lg border border-nature-brown/50 px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-nature-green focus:border-nature-green"
                 placeholder="Tu nombre"
               />
               @if (contactForm.controls.fullName.touched && contactForm.controls.fullName.invalid) {
@@ -51,11 +51,11 @@
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+              <label class="block text-sm font-medium text-nature-brown mb-1">Teléfono</label>
               <input
                 type="tel"
                 formControlName="phone"
-                class="w-full rounded-lg border border-gray-200 px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600"
+                class="w-full rounded-lg border border-nature-brown/50 px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-nature-green focus:border-nature-green"
                 placeholder="Ej: 5551234567"
               />
               @if (contactForm.controls.phone.touched && contactForm.controls.phone.invalid) {
@@ -64,18 +64,18 @@
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Mensaje (opcional)</label>
+              <label class="block text-sm font-medium text-nature-brown mb-1">Mensaje (opcional)</label>
               <textarea
                 rows="3"
                 formControlName="message"
-                class="w-full rounded-lg border border-gray-200 px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600"
+                class="w-full rounded-lg border border-nature-brown/50 px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-nature-green focus:border-nature-green"
                 placeholder="Cuéntanos por qué quieres adoptar"
               ></textarea>
             </div>
 
             <button
               type="submit"
-              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg shadow-lg transition"
+              class="w-full bg-nature-green hover:bg-[#4a572e] text-nature-light font-semibold py-3 rounded-lg shadow-sm transition"
             >
               Enviar y abrir WhatsApp
             </button>
