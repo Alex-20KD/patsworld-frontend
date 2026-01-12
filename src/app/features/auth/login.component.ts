@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -23,6 +23,13 @@ export class LoginComponent {
   submitting = false;
   error?: string;
 
+  ngOnInit(): void {
+    const saved = localStorage.getItem('saved_email');
+    if (saved) {
+      this.form.patchValue({ email: saved });
+    }
+  }
+
   onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -32,7 +39,10 @@ export class LoginComponent {
     this.error = undefined;
     const { email, password } = this.form.value;
     this.auth.login({ email: email ?? '', password: password ?? '' }).subscribe({
-      next: () => this.router.navigateByUrl('/'),
+      next: () => {
+        localStorage.setItem('saved_email', email ?? '');
+        this.router.navigateByUrl('/');
+      },
       error: (err) => {
         this.error = err?.error?.message ?? 'Error al iniciar sesión';
         this.submitting = false;

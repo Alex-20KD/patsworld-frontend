@@ -6,6 +6,7 @@ export interface Pet {
   description: string;
   imageUrl: string;
   isAdopted: boolean;
+  species?: string;
   isApproved?: boolean;
   ownerId?: string | null;
   adoptionDate?: string | null;

@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { PetService } from '../../core/services/pet.service';
 import { Pet } from '../../core/models/pet.model';
@@ -7,12 +8,17 @@ import { Pet } from '../../core/models/pet.model';
 @Component({
   selector: 'app-pet-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './pet-list.component.html',
   styleUrls: ['./pet-list.component.css']
 })
 export class PetListComponent implements OnInit {
   pets: Pet[] = [];
+
+  selectedSpecies: string = '';
+  searchBreed: string = '';
+  searchAge?: number | null;
+  isLoading = true;
 
   constructor(
     private petService: PetService,
@@ -20,17 +26,40 @@ export class PetListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('Iniciando petición...');
-    this.petService.getPets().subscribe({
-      next: (data) => {
-        console.log('Datos recibidos:', data);
-        this.pets = data;
+    this.loadPets();
+  }
 
-        // <--- 3. EL TRUCO DE MAGIA: Forzar la actualización
-        this.cd.detectChanges();
-      },
-      error: (error) => console.error('Error:', error)
-    });
+  loadPets(): void {
+    this.isLoading = true;
+    this.petService
+      .getPets({
+        species: this.selectedSpecies || undefined,
+        breed: this.searchBreed || undefined,
+        age: this.searchAge === undefined || this.searchAge === null ? undefined : this.searchAge,
+      })
+      .subscribe({
+        next: (data) => {
+          this.pets = data;
+          this.cd.detectChanges();
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error:', error);
+          this.isLoading = false;
+        },
+      });
+  }
+
+
+  onFilter(): void {
+    this.loadPets();
+  }
+
+  resetFilters(): void {
+    this.selectedSpecies = '';
+    this.searchBreed = '';
+    this.searchAge = undefined;
+    this.loadPets();
   }
 
   handleImageError(event: Event): void {

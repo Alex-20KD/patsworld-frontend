@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Pet } from '../models/pet.model';
 
@@ -9,8 +9,22 @@ export class PetService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getPets(): Observable<Pet[]> {
-    return this.http.get<Pet[]>(this.apiUrl);
+  getPets(filters?: { species?: string; breed?: string; age?: number | string }): Observable<Pet[]> {
+    let params = new HttpParams();
+
+    if (filters?.species) {
+      params = params.set('species', filters.species);
+    }
+
+    if (filters?.breed) {
+      params = params.set('breed', filters.breed);
+    }
+
+    if (filters?.age !== undefined && filters?.age !== null && filters?.age !== '') {
+      params = params.set('age', String(filters.age));
+    }
+
+    return this.http.get<Pet[]>(this.apiUrl, { params });
   }
   // 👇 AGREGA ESTO: Buscar por ID
   getPetById(id: string): Observable<Pet> {

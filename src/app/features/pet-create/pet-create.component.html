@@ -15,6 +15,14 @@
           <input formControlName="name" type="text" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ej. Michi Tester" />
         </label>
         <label class="block">
+          <span class="text-sm font-semibold text-gray-700">Tipo de Mascota</span>
+          <select formControlName="species" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+            <option value="">Selecciona</option>
+            <option value="Perro">Perro</option>
+            <option value="Gato">Gato</option>
+          </select>
+        </label>
+        <label class="block">
           <span class="text-sm font-semibold text-gray-700">Raza</span>
           <input formControlName="breed" type="text" class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ej. Siamés" />
         </label>

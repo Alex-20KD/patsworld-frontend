@@ -25,6 +25,7 @@ export class PetCreateComponent {
 
   form = this.fb.group({
     name: ['', Validators.required],
+    species: ['', Validators.required],
     breed: ['', Validators.required],
     age: ['', Validators.required],
     description: ['', Validators.required],
@@ -58,10 +59,11 @@ export class PetCreateComponent {
 
     const currentUser = this.auth.currentUser;
     const formData = new FormData();
-    formData.append('name', this.form.value.name ?? '');
-    formData.append('breed', this.form.value.breed ?? '');
-    formData.append('age', String(this.form.value.age ?? ''));
-    formData.append('description', this.form.value.description ?? '');
+    formData.append('name', this.form.get('name')?.value ?? '');
+    formData.append('species', this.form.get('species')?.value ?? '');
+    formData.append('breed', this.form.get('breed')?.value ?? '');
+    formData.append('age', String(this.form.get('age')?.value ?? ''));
+    formData.append('description', this.form.get('description')?.value ?? '');
     formData.append('ownerId', currentUser?.id ?? '');
     formData.append('image', this.selectedFile);
 
