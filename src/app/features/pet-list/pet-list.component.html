@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-nature-light/80 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-nature-light/80 py-12 px-4 md:px-6 lg:px-10">
   <div class="text-center mb-12">
     <h1 class="text-4xl font-extrabold text-nature-green tracking-tight sm:text-5xl">
       🐾 PatsWorld
@@ -9,7 +9,7 @@
   </div>
 
   @if (availablePets.length > 0) {
-    <div class="max-w-7xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div class="max-w-7xl mx-auto grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
       @for (pet of availablePets; track pet.id) {
         <div class="bg-nature-cream overflow-hidden shadow-sm rounded-2xl transition-shadow duration-300 border-2 border-nature-brown">

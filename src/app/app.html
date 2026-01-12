@@ -1,8 +1,9 @@
-<header class="sticky top-6 z-50 px-4">
-	<div class="mx-auto max-w-7xl bg-nature-green text-nature-light rounded-full px-6 py-3 flex items-center justify-between shadow-sm border border-nature-brown/30">
+<header class="sticky top-0 md:top-6 z-50 w-full bg-nature-green/95 md:bg-transparent px-4 py-3 md:py-0">
+	<div class="flex items-center justify-between md:mx-auto md:max-w-7xl md:bg-nature-green md:text-nature-light md:rounded-full md:px-6 md:py-3 md:shadow-sm md:border md:border-nature-brown/30">
 		<a routerLink="/" class="text-2xl font-bold text-nature-light">PatsWorld</a>
 
-		<nav class="flex items-center gap-3 text-sm font-semibold">
+		<!-- Desktop nav -->
+		<nav class="hidden md:flex items-center gap-3 text-sm font-semibold">
 			@if (auth.user$ | async; as user) {
 				<a routerLink="/publish" class="px-3 py-2 rounded-xl border border-nature-light/20 text-nature-light hover:bg-nature-light/10">Publicar Mascota</a>
 				<a routerLink="/my-pets" class="px-3 py-2 rounded-xl border border-nature-light/20 text-nature-light hover:bg-nature-light/10">Mis Mascotas</a>
@@ -23,7 +24,42 @@
 			}
 			<a routerLink="/adopted" class="px-3 py-2 rounded-xl border border-nature-light/20 text-nature-light hover:bg-nature-light/10">Finales Felices</a>
 		</nav>
+
+		<!-- Mobile menu button -->
+		<button
+			class="md:hidden text-nature-light p-2 focus:outline-none"
+			(click)="toggleMenu()"
+			aria-label="Abrir menú"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+			</svg>
+		</button>
 	</div>
+
+	<!-- Mobile dropdown -->
+	@if (isMenuOpen) {
+		<div class="md:hidden bg-nature-green text-nature-light shadow-lg border-t border-nature-brown/30 px-4 py-3 space-y-3">
+			@if (auth.user$ | async; as user) {
+				<a routerLink="/publish" class="block px-3 py-2 rounded-lg border border-nature-light/20 hover:bg-nature-light/10" (click)="toggleMenu()">Publicar Mascota</a>
+				<a routerLink="/my-pets" class="block px-3 py-2 rounded-lg border border-nature-light/20 hover:bg-nature-light/10" (click)="toggleMenu()">Mis Mascotas</a>
+				<a routerLink="/profile" class="block px-3 py-2 rounded-lg border border-nature-light/20 hover:bg-nature-light/10" (click)="toggleMenu()">Mi Perfil</a>
+				@if (user.role === 'admin') {
+					<a routerLink="/admin" class="block px-3 py-2 rounded-lg border border-nature-light/20 hover:bg-nature-light/10" (click)="toggleMenu()">Panel Admin</a>
+				}
+				<button
+					class="w-full text-left px-3 py-2 rounded-lg border border-nature-light/20 hover:bg-nature-light/10"
+					(click)="auth.logout(); toggleMenu()"
+				>
+					Cerrar sesión
+				</button>
+			} @else {
+				<a routerLink="/login" class="block px-3 py-2 rounded-lg border border-nature-light/20 hover:bg-nature-light/10" (click)="toggleMenu()">Entrar</a>
+				<a routerLink="/register" class="block px-3 py-2 rounded-lg bg-nature-light text-nature-green hover:bg-white" (click)="toggleMenu()">Registrarse</a>
+			}
+			<a routerLink="/adopted" class="block px-3 py-2 rounded-lg border border-nature-light/20 hover:bg-nature-light/10" (click)="toggleMenu()">Finales Felices</a>
+		</div>
+	}
 </header>
 
 <main class="min-h-screen bg-nature-light/80">

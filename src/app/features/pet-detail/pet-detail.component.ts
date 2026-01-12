@@ -35,6 +35,7 @@ export class PetDetailComponent implements OnInit {
     if (id) {
       this.petService.getPetById(id).subscribe((pet) => {
         this.pet = pet;
+        console.log('Datos del dueño:', pet?.user);
         this.cd.detectChanges();
       });
     }
@@ -56,15 +57,31 @@ export class PetDetailComponent implements OnInit {
     }
 
     if (!this.pet) {
+      alert('No se encontró la mascota.');
       return;
     }
 
-    const phone = '593999999999';
-    const message = encodeURIComponent(
-      `Hola, estoy interesado en adoptar a ${this.pet.name}, el ${this.pet.breed}. ¿Sigue disponible?`,
-    );
+    const ownerPhone = this.pet.user?.phone ?? null;
+    if (!ownerPhone) {
+      alert('El dueño no tiene teléfono registrado');
+      return;
+    }
 
-    const whatsappUrl = `https://wa.me/${phone}?text=${message}`;
+    const digitsOnly = ownerPhone.replace(/\D/g, '');
+
+    let sanitizedPhone = digitsOnly;
+    if (/^09\d{8}$/.test(digitsOnly)) {
+      sanitizedPhone = `593${digitsOnly.slice(1)}`;
+    }
+
+    if (sanitizedPhone.length < 9) {
+      alert('Número de teléfono inválido');
+      return;
+    }
+
+    const message = encodeURIComponent(`Hola, estoy interesado en adoptar a ${this.pet.name}.`);
+
+    const whatsappUrl = `https://wa.me/${sanitizedPhone}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   }
 
@@ -82,14 +99,20 @@ export class PetDetailComponent implements OnInit {
     const phone = this.contactForm.value.phone ?? '';
     const message = this.contactForm.value.message ?? '';
 
-    // TODO: Reemplazar con pet.ownerPhone
-    const ownerPhone = '123456789';
+    const ownerPhone = this.pet.ownerPhone ?? '';
+
+    const sanitizedPhone = ownerPhone.replace(/[\s-]/g, '');
+
+    if (!sanitizedPhone) {
+      alert('No hay un número de contacto disponible.');
+      return;
+    }
 
     const text = encodeURIComponent(
       `Hola, me llamo ${fullName} y estoy interesado en adoptar a ${this.pet.name}. Mi teléfono es ${phone}. ${message}`.trim(),
     );
 
-    const whatsappUrl = `https://wa.me/${ownerPhone}?text=${text}`;
+    const whatsappUrl = `https://wa.me/${sanitizedPhone}?text=${text}`;
 
     window.open(whatsappUrl, '_blank');
     this.submitted = true;

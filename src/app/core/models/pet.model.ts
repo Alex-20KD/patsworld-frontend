@@ -9,6 +9,10 @@ export interface Pet {
   species?: string;
   isApproved?: boolean;
   ownerId?: string | null;
+  ownerPhone?: string | null;
+  user?: {
+    phone?: string | null;
+  };
   adoptionDate?: string | null;
   createdAt?: string | null;
 }

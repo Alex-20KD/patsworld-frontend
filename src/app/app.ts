@@ -11,6 +11,11 @@ import { AuthService } from './core/services/auth.service';
 })
 export class App {
   protected readonly title = signal('Frontend');
+  isMenuOpen = false;
 
   constructor(public auth: AuthService) {}
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 }
