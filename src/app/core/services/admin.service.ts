@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { User } from '../models/user.model';
 import { Pet } from '../models/pet.model';
+import { environment } from '../../../environments/environment';
 
 export interface AdminStats {
   totalUsers: number;
@@ -15,8 +16,8 @@ export interface AdminStats {
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
-  private readonly baseUrl = 'http://localhost:3000/admin';
-  private readonly usersUrl = 'http://localhost:3000/users';
+  private readonly baseUrl = `${environment.apiUrl}/admin`;
+  private readonly usersUrl = `${environment.apiUrl}/users`;
 
   constructor(private readonly http: HttpClient, private readonly auth: AuthService) {}
 

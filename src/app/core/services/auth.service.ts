@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../models/user.model';
 
@@ -10,8 +11,8 @@ interface AuthResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly apiUrl = 'http://localhost:3000/auth';
-  private readonly usersUrl = 'http://localhost:3000/users';
+  private readonly apiUrl = `${environment.apiUrl}/auth`;
+  private readonly usersUrl = `${environment.apiUrl}/users`;
   private readonly storageKey = 'patsworld:user';
   private userSubject = new BehaviorSubject<User | null>(this.readStoredUser());
 
